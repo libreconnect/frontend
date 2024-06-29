@@ -3,8 +3,7 @@ name: CI Lint
 on:
   push:
     branches:
-      - main
-  pull_request:
+      - test
 
 permissions:
   actions: read
@@ -26,15 +25,13 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 9.4.0
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+            - args: [--global, gulp, prettier, typescript]
       - uses: actions/setup-node@v3
         with:
           node-version: 22.3.0
           cache: 'pnpm'
-
-      - run: pnpm ci
-      - uses: nrwl/nx-set-shas@v4
-
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
       - run: npx nx affected -t lint test build
       - run: npx nx affected --parallel 1 -t e2e-ci
