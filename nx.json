@@ -28,12 +28,7 @@
         "serveStaticTargetName": "serve-static"
       }
     },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
+    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
     {
       "plugin": "@nx/cypress/plugin",
       "options": {
@@ -43,30 +38,14 @@
         "ciTargetName": "e2e-ci"
       }
     },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    }
+    { "plugin": "@nx/jest/plugin", "options": { "targetName": "test" } }
   ],
   "generators": {
     "@nx/react": {
-      "application": {
-        "babel": true,
-        "style": "scss",
-        "linter": "eslint",
-        "bundler": "vite"
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint",
-        "unitTestRunner": "vitest"
-      }
+      "application": { "babel": true, "style": "scss", "linter": "eslint", "bundler": "vite" },
+      "component": { "style": "scss" },
+      "library": { "style": "scss", "linter": "eslint", "unitTestRunner": "vitest" }
     }
   },
-  "nxCloudAccessToken": "MTgzOTZhMjktYjcwZC00ZWEwLWEzZmItZjAzNjA5NzFlNzI3fHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "YTMzYzMyYmYtZGIzOS00NjJmLWJmOWMtNzk1ZDczYTk5ODY5fHJlYWQtd3JpdGU="
 }
