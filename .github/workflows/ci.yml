@@ -1,4 +1,4 @@
-name: CI
+name: CI Lint
 
 on:
   push:
@@ -23,9 +23,12 @@ jobs:
       # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="e2e-ci"
 
       # Cache node_modules
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9.4.0
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 22.3.0
           cache: 'pnpm'
 
       - run: pnpm ci
