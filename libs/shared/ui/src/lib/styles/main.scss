@@ -1,0 +1,31 @@
+@tailwind components;
+@tailwind base;
+@tailwind utilities;
+
+@import 'base/variable';
+
+@import 'markdown.scss';
+
+@import 'object/animation';
+
+@import 'components/input.scss';
+@import 'components/modal.scss';
+@import 'components/skeleton.scss';
+@import 'components/button.scss';
+@import 'components/menu.scss';
+@import 'components/modal.scss';
+@import 'components/button-action.scss';
+@import 'components/date-picker';
+@import 'components/select';
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: theme('colors.neutral.200');
+  min-height: 100vh;
+
+  main:not(.h-screen, .layout-onboarding) {
+    height: calc(100vh - theme('spacing.16'));
+  }
+}

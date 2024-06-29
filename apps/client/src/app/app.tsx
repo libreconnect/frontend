@@ -1,14 +1,78 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
+import { useOidc, useOidcAccessToken } from '@axa-fr/react-oidc'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { AppDispatch } from '@libreconnect/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getUserState, userActions } from '@libreconnect/domains/user'
+import { LoadingScreen } from '@libreconnect/ui'
+import { ROUTER } from './router.main'
+import { match } from 'ts-pattern'
+import { Layout } from '@libreconnect/pages/layout'
 
-import NxWelcome from './nx-welcome';
+export default function App() {
+  const { pathname } = useLocation()
 
-export function App() {
+  const dispatch = useDispatch<AppDispatch>()
+  const { login, isAuthenticated } = useOidc()
+  const { isLoading } = useSelector(getUserState)
+
+  const { accessToken, accessTokenPayload } = useOidcAccessToken()
+  // const { data } = useGetMeQuery('', {
+  //   skip: !token
+  // })
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      login()
+    }
+  }, [isAuthenticated, login])
+
+  useEffect(() => {
+    if (accessToken && accessTokenPayload) {
+      dispatch(
+        userActions.setUser({
+          user: accessTokenPayload,
+          token: accessToken
+        })
+      )
+    }
+  }, [accessToken, accessTokenPayload, dispatch])
+
+  if (isLoading && !pathname.includes('authentication')) {
+    return <LoadingScreen />
+  }
+
+
   return (
     <div>
-      <NxWelcome title="client" />
-    </div>
-  );
-}
+      <Routes>
+        {ROUTER.map((route) => 
+          match(route)
+          .when(
+            (r) => r.layout,
+            (r) => (
+              <Route 
+                key={r.path}
+                path={r.path}
+                element={
+                  <Layout>
+                    {r.component}
+                  </Layout>
+                }
+              />
+            )
+          )
+          .otherwise((r) => (
+            <Route 
+              key={r.path}
+              path={r.path}
+              element={r.component}
+            />
+          ))
+        )}
 
-export default App;
+        <Route path="*" element={<Navigate to='/home' replace />} />
+      </Routes>
+    </div>
+  )
+}

@@ -2,10 +2,14 @@
   "root": true,
   "ignorePatterns": ["**/*"],
   "plugins": ["@nx"],
+  "rules": {
+    "quotes": ["error", "single"]
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
+        "semi": ["error", "never"],
         "@nx/enforce-module-boundaries": [
           "error",
           {
@@ -24,19 +28,27 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "rules": {
+        "semi": "off",
+        "quotes": "error",
+        "@typescript-eslint/semi": ["error", "never"]
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
-      "rules": {}
+      "rules": {
+        "semi": "off"
+      }
     },
     {
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
       "env": {
         "jest": true
       },
-      "rules": {}
+      "rules": {
+        "semi": "off"
+      }
     }
   ]
 }

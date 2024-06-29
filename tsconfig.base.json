@@ -14,7 +14,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@libreconnect/contracts": ["libs/shared/contracts/src/index.ts"],
+      "@libreconnect/domains/user": ["libs/domains/user/src/index.ts"],
+      "@libreconnect/pages/layout": ["libs/pages/layout/src/index.ts"],
+      "@libreconnect/store": ["libs/store/src/index.ts"],
+      "@libreconnect/ui": ["libs/shared/ui/src/index.ts"],
+      "@libreconnect/utils": ["libs/shared/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

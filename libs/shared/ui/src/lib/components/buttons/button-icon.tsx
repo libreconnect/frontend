@@ -1,0 +1,116 @@
+import { type MouseEvent } from 'react'
+import { Link } from 'react-router-dom'
+import { Icon } from '../icons/icon'
+import { LoaderSpinner } from '../loader-spinner/loader-spinner'
+import { ButtonSize } from './button'
+
+export enum ButtonIconStyle {
+  BASIC = 'basic',
+  RAISED = 'raised',
+  STROKED = 'stroked',
+  FLAT = 'flat',
+  ALT = 'alt',
+  DARK = 'dark',
+}
+
+export interface ButtonIconProps {
+  size?: ButtonSize;
+  style?: ButtonIconStyle;
+  icon: string;
+  link?: string;
+  disabled?: boolean;
+  className?: string;
+  onClick?: (e: MouseEvent) => void;
+  loading?: boolean;
+  notification?: boolean;
+  active?: boolean;
+  iconClassName?: string;
+  external?: boolean;
+  dataTestId?: string;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+/**
+ * @deprecated This should be migrated to the <Button /> component
+ */
+export function ButtonIcon(props: ButtonIconProps) {
+  const {
+    icon,
+    style = ButtonIconStyle.BASIC,
+    size = ButtonSize.REGULAR,
+    disabled = false,
+    loading = false,
+    className = '',
+    onClick,
+    notification = false,
+    link,
+    external = false,
+    active = false,
+    iconClassName = '',
+    type = 'button',
+  } = props
+
+  const defineClass = `btn btn-icon group ${size ? `btn--${size}` : ''} ${
+    style ? `btn-icon--${style}` : ''
+  } ${disabled || loading ? 'btn--disabled' : ''} ${
+    active ? 'btn--active' : ''
+  } ${className}`
+
+  const contentBtn = () => {
+    return (
+      <>
+        {!link && (
+          <button
+            type={type}
+            data-testid={props.dataTestId}
+            className={defineClass}
+            onClick={(e) => onClick && onClick(e)}
+          >
+            {loading ? (
+              <LoaderSpinner />
+            ) : (
+              <>
+                {notification && (
+                  <span className="btn__notification w-2 h-2 rounded-lg bg-red-500 absolute -top-0.5 -right-0.5"></span>
+                )}
+                <Icon name={icon} className={iconClassName} />
+              </>
+            )}
+          </button>
+        )}
+
+        {link && !external && (
+          <Link
+            data-testid={props.dataTestId}
+            to={link}
+            className={defineClass}
+            onClick={onClick}
+          >
+            {notification && (
+              <span className="btn__notification w-2 h-2 rounded-lg bg-red-500 absolute -top-0.5 -right-0.5"></span>
+            )}
+            <Icon name={icon} className={iconClassName} />
+          </Link>
+        )}
+
+        {link && external && (
+          <a
+            data-testid={props.dataTestId}
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+            className={defineClass}
+            onClick={onClick}
+          >
+            {notification && (
+              <span className="btn__notification w-2 h-2 rounded-lg bg-red-500 absolute -top-0.5 -right-0.5"></span>
+            )}
+            <Icon name={icon} className={iconClassName} />
+          </a>
+        )}
+      </>
+    )
+  }
+
+  return contentBtn()
+}
