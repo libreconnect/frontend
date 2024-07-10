@@ -2,8 +2,6 @@ export interface ResourceAccess {
   [key: string]: { roles: string[]}
 }
 
-
-
 export interface JwtEntity {
   exp: number
   iat: number
