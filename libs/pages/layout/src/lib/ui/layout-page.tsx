@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react'
 import { Navigation } from './navigation'
+import TopBar from './top-bar'
 
 export default function LayoutPage({ children }: PropsWithChildren) {
   return (
@@ -12,7 +13,9 @@ export default function LayoutPage({ children }: PropsWithChildren) {
           </div>
 
           <div className="w-full h-full flex flex-col">
-            {/* Top bar / Search bar */}
+            <div>
+              <TopBar />
+            </div>
 
             <div className="h-full pt-2 px-2">
               {children}
