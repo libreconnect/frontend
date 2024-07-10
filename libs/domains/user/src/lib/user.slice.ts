@@ -13,11 +13,19 @@ export const userSlice = createSlice({
   name: USER_KEY,
   initialState: initialUserState,
   reducers: {
-    setUser: (state, action) => {
-      state.isLoading = false
+    setAuthData: (state, action) => {
       state.isAuthenticated = !!action.payload.user
-      state.user = action.payload.user
+      state.payload = action.payload.user
       state.token = action.payload.token
+    },
+    setUserData: (state, action) => {
+      console.log("setUserData", action.payload);
+      
+      state.user = action.payload
+      state.isLoading = false
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload
     }
   },
   //extraReducers: (builder) => {}

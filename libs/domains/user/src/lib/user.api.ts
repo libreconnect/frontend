@@ -16,12 +16,12 @@ export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery,
   endpoints: (builder) => ({
-    getMe: builder.query({
-      query: () => '/v1/authentication/me'
+    getUserStatus: builder.query<any, string>({
+      query: (sub) => `/v1/users/status?sub=${sub}`
     }),
   }),
 })
 
 export const {
-  useGetMeQuery,
+  useGetUserStatusQuery,
 } = userApi
