@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AppDispatch } from '@libreconnect/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { getUserState, userActions } from '@libreconnect/domains/user'
+import { getUserState, useGetUserStatusQuery, userActions } from '@libreconnect/domains/user'
 import { LoadingScreen } from '@libreconnect/ui'
 import { ROUTER } from './router.main'
 import { match } from 'ts-pattern'
@@ -14,13 +14,13 @@ export default function App() {
 
   const dispatch = useDispatch<AppDispatch>()
   const { login, isAuthenticated } = useOidc()
-  const { isLoading } = useSelector(getUserState)
+  const { isLoading, token, user } = useSelector(getUserState)
 
   const { accessToken, accessTokenPayload } = useOidcAccessToken()
-  // const { data } = useGetMeQuery('', {
-  //   skip: !token
-  // })
-
+  const { data, isError } = useGetUserStatusQuery(accessTokenPayload ? accessTokenPayload.sub : '', {
+    skip: !accessTokenPayload || !isAuthenticated || !token
+  })
+  
   useEffect(() => {
     if (!isAuthenticated) {
       login()
@@ -28,9 +28,20 @@ export default function App() {
   }, [isAuthenticated, login])
 
   useEffect(() => {
+    console.log(data, isError)
+    if (isError) {
+      dispatch(userActions.setLoading(false)) 
+    }
+
+    if (data) {
+      dispatch(userActions.setUserData(data))
+    }
+  }, [data, dispatch, isError])
+
+  useEffect(() => {
     if (accessToken && accessTokenPayload) {
       dispatch(
-        userActions.setUser({
+        userActions.setAuthData({
           user: accessTokenPayload,
           token: accessToken
         })
@@ -42,7 +53,14 @@ export default function App() {
     return <LoadingScreen />
   }
 
-
+  if (
+    isAuthenticated && 
+    !pathname.includes('authentication') &&
+    !isLoading && !user
+  ) {
+    return <div>Pas de compte créé</div>
+  }
+  
   return (
     <div>
       <Routes>
