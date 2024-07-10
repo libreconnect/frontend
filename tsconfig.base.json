@@ -10,18 +10,42 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@libreconnect/contracts": ["libs/shared/contracts/src/index.ts"],
-      "@libreconnect/domains/user": ["libs/domains/user/src/index.ts"],
-      "@libreconnect/pages/layout": ["libs/pages/layout/src/index.ts"],
-      "@libreconnect/store": ["libs/store/src/index.ts"],
-      "@libreconnect/ui": ["libs/shared/ui/src/index.ts"],
-      "@libreconnect/utils": ["libs/shared/utils/src/index.ts"]
+      "@libreconnect/pages/home": [
+        "libs/pages/home/src/index.ts"
+      ],
+      "@libreconnect/routes": [
+        "libs/shared/routes/src/index.ts"
+      ],
+      "@libreconnect/contracts": [
+        "libs/shared/contracts/src/index.ts"
+      ],
+      "@libreconnect/domains/user": [
+        "libs/domains/user/src/index.ts"
+      ],
+      "@libreconnect/pages/layout": [
+        "libs/pages/layout/src/index.ts"
+      ],
+      "@libreconnect/store": [
+        "libs/store/src/index.ts"
+      ],
+      "@libreconnect/ui": [
+        "libs/shared/ui/src/index.ts"
+      ],
+      "@libreconnect/utils": [
+        "libs/shared/utils/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
